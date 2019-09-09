@@ -1,6 +1,7 @@
 import random
 
 letters_guessed = []
+visualize = ""
 
 def load_word():
     '''
@@ -42,13 +43,6 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
-    visual = "_" * len(secret_word)
-    print(visual)
-
-    
-    pass
-
-guess = input("Guess a letter:")
 
 def is_guess_in_word(guess, secret_word):
     '''
@@ -60,17 +54,16 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     #TODO: check if the letter guess is in the secret word
-
-    if guess in letters_guessed:
-        print("You've already guessed that letter!")
+    if len(guess) != 1:
+        print("Guesses can only be 1 character long!")
 
     elif guess in secret_word:
-        letters_guessed.append(guess)
         return True
-
 
     else:
         return False
+
+    pass
 
 
 def spaceman(secret_word):
@@ -85,25 +78,26 @@ def spaceman(secret_word):
     print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman!")
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
-
-    guess = input("Guess a letter:")
+    chances = 7
+    while chances > 0:
+        guess = input("Guess a letter:")
 
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-
-    is_guess_in_word(guess, secret_word)
-
+        if is_guess_in_word(guess, secret_word) is True:
+            letters_guessed.append(guess)
+            print("That letter is in the word!")
+    
+        if is_guess_in_word(guess, secret_word) is False:
+            chances = chances - 1
+            print("That letter is not in the word!")
+            print(chances)
+    
     #TODO: show the guessed word so far
+    while chances > 7:
+        is_guess_in_word(guess, secret_word)
 
     #TODO: check if the game has been won or lost
-
-
-
-
-
 
 #These function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word)
-print(secret_word)
-is_guess_in_word(guess, secret_word)
-print(letters_guessed)
