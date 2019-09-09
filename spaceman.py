@@ -1,5 +1,7 @@
 import random
 
+letters_guessed = []
+
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -25,6 +27,8 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
+    
+
     pass
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -38,9 +42,13 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
+    visual = "_" * len(secret_word)
+    print(visual)
 
+    
     pass
 
+guess = input("Guess a letter:")
 
 def is_guess_in_word(guess, secret_word):
     '''
@@ -53,9 +61,16 @@ def is_guess_in_word(guess, secret_word):
     '''
     #TODO: check if the letter guess is in the secret word
 
-    pass
+    if guess in letters_guessed:
+        print("You've already guessed that letter!")
+
+    elif guess in secret_word:
+        letters_guessed.append(guess)
+        return True
 
 
+    else:
+        return False
 
 
 def spaceman(secret_word):
@@ -67,10 +82,15 @@ def spaceman(secret_word):
 
 
     #TODO: show the player information about the game according to the project spec
+    print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman!")
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
 
+    guess = input("Guess a letter:")
+
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+
+    is_guess_in_word(guess, secret_word)
 
     #TODO: show the guessed word so far
 
@@ -84,3 +104,6 @@ def spaceman(secret_word):
 #These function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word)
+print(secret_word)
+is_guess_in_word(guess, secret_word)
+print(letters_guessed)
