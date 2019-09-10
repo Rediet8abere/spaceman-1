@@ -1,8 +1,5 @@
 import random
 
-letters_guessed = []
-visualize = ""
-
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -28,9 +25,17 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    
+    i = 0
 
-    pass
+    for letter in letters_guessed:
+        number_of_letters = secret_word.count(letter)
+        if (number_of_letters > 0):
+            i += number_of_letters
+
+    if len(secret_word) == i:
+        return True
+    else: 
+        return False
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -44,6 +49,15 @@ def get_guessed_word(secret_word, letters_guessed):
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
+    result = " "
+
+    for letter in secret_word:
+        if letter in letters_guessed:
+            result += (letter + " ")
+        else:
+            result += ("_ ")
+    return print(result)
+
 def is_guess_in_word(guess, secret_word):
     '''
     A function to check if the guessed letter is in the secret word
@@ -54,16 +68,10 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     #TODO: check if the letter guess is in the secret word
-    if len(guess) != 1:
-        print("Guesses can only be 1 character long!")
-
-    elif guess in secret_word:
-        return True
-
-    else:
-        return False
-
-    pass
+    for letter in secret_word:
+       if (guess == letter):
+            return True
+    return False
 
 
 def spaceman(secret_word):
@@ -73,30 +81,48 @@ def spaceman(secret_word):
       secret_word (string): the secret word to guess.
     '''
 
+    chances = 7
+
+    letters_guessed = []
+
+    print(secret_word)
 
     #TODO: show the player information about the game according to the project spec
-    print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman!")
 
+    print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman!")
+    
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
-    chances = 7
-    while chances > 0:
-        guess = input("Guess a letter:")
+    while (is_word_guessed(secret_word, letters_guessed) == False and chances>0):    
+    
+        guess = input('Guess one letter.. \n')
+        print('')
+    
 
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-        if is_guess_in_word(guess, secret_word) is True:
+        if len(guess) != 1:
+            print("That is not one letter!")
+
+        elif guess in letters_guessed:
+            print("You already guessed that!")
+        
+        elif is_guess_in_word(guess, secret_word) is True:
             letters_guessed.append(guess)
             print("That letter is in the word!")
+            get_guessed_word(secret_word, letters_guessed)
     
-        if is_guess_in_word(guess, secret_word) is False:
+        elif is_guess_in_word(guess, secret_word) is False:
             chances = chances - 1
-            print("That letter is not in the word!")
-            print(chances)
-    
-    #TODO: show the guessed word so far
-    while chances > 7:
-        is_guess_in_word(guess, secret_word)
+            print("That letter is not in the word! You have " + str(chances) + " chances left")
+            get_guessed_word(secret_word, letters_guessed)
 
+    #TODO: show the guessed word so far
+
+    
     #TODO: check if the game has been won or lost
+    if chances == 0:
+        print("You have sadly lost the game, the secret word was '" + str(secret_word) + "' please try again soon!")
+    else:
+        print("You won the game! The secret word was '" + str(secret_word) + "' play again soon!")
 
 #These function calls that will start the game
 secret_word = load_word()
