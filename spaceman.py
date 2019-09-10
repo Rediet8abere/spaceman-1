@@ -25,14 +25,14 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    i = 0
+    counter = 0
 
     for letter in letters_guessed:
         number_of_letters = secret_word.count(letter)
         if (number_of_letters > 0):
-            i += number_of_letters
+            counter += number_of_letters
 
-    if len(secret_word) == i:
+    if len(secret_word) == counter:
         return True
     else: 
         return False
@@ -49,14 +49,14 @@ def get_guessed_word(secret_word, letters_guessed):
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
-    result = " "
+    visualize = " "
 
     for letter in secret_word:
         if letter in letters_guessed:
-            result += (letter + " ")
+            visualize += (letter + " ")
         else:
-            result += ("_ ")
-    return print(result)
+            visualize += ("_ ")
+    return print(visualize)
 
 def is_guess_in_word(guess, secret_word):
     '''
@@ -68,6 +68,7 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     #TODO: check if the letter guess is in the secret word
+
     for letter in secret_word:
        if (guess == letter):
             return True
@@ -89,8 +90,8 @@ def spaceman(secret_word):
 
     #TODO: show the player information about the game according to the project spec
 
-    print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman!")
-    
+    print("Hello! This program is called Spaceman, similar to a game you may have heard of: Hangman! There is a secret word that the comptuer has selected, and you can guess one letter at a time. The secret word is " + str(len(secret_word)) + " letters long. Good luck!")
+    get_guessed_word(secret_word, letters_guessed)
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
     while (is_word_guessed(secret_word, letters_guessed) == False and chances>0):    
     
